@@ -22,6 +22,11 @@ public class BulletCtrl : MonoBehaviour
         {
             damage = 10;
             Destroy(gameObject);
-        }        
+        }
+        if (collision.gameObject.tag == "Boss")
+        {
+            damage = 10;
+            Destroy(gameObject);
+        }
     }
 }

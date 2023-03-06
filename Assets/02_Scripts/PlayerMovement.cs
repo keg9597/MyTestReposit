@@ -15,10 +15,14 @@ public class PlayerMovement : MonoBehaviour
 
     public int hp = 100;
     public int maxhp = 100;
+    public int damage = 10;
     public bool isDead;
+
     
     public CharacterController controller;
     public Transform character;
+    public GameObject boss;
+
 
     private void Start()
     {
@@ -90,14 +94,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(other.gameObject.tag == "Enemy")
+        if(collider.gameObject.tag == "Enemy")
         {
             Debug.Log("ºÎµúÈû");
             hp--;
             if(hp <= 0)
             {
+                Debug.Log("°ÔÀÓ¿À¹ö");
+                Destroy(gameObject);
+            }
+        }
+        if (collider.gameObject.tag == "Boss")
+        {
+            //int dmg = boss.GetComponent<EnemyBossCtrl>().damage;
+            //hp -= dmg;
+            hp--;
+            Debug.Log("ºÎµúÈû");           
+            if (hp <= 0)
+            {                
                 Debug.Log("°ÔÀÓ¿À¹ö");
                 Destroy(gameObject);
             }

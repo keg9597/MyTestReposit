@@ -8,6 +8,9 @@ TagManager:
   - Wall
   - Bullet
   - Enemy
+  - PlayerEyes
+  - SpawnPos
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -28,10 +28,8 @@ public class EnemyCtrl : MonoBehaviour
     public CharacterController enemyCharacterController;
     public PlayerMovement movement;
 
-
-
-
     public int hp = 50;
+    public int damage = 10;
 
     void Start()
     {
