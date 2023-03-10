@@ -17,12 +17,11 @@ public class PlayerMovement : MonoBehaviour
     public int maxhp = 100;
     public int damage = 10;
     public bool isDead;
-
-    
+ 
     public CharacterController controller;
     public Transform character;
     public GameObject boss;
-
+    public GameObject obj;
 
     private void Start()
     {
@@ -52,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetBool("isRun", false);               
             }
-            //moveVector.z = Input.GetAxisRaw("Vertical");
-            
+            moveVector.z = Input.GetAxisRaw("Vertical");
+
             if (Input.GetButtonDown("Jump"))
             {
                 anim.SetBool("isJump", true);
@@ -94,13 +93,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Obj")
+        {
+            int dmg = collision.gameObject.GetComponent<EnemyBossobj>().damage;
+            hp -= dmg;
+            //hp--;
+            Debug.Log("ºÎµúÈû");
+            if (hp <= 0)
+            {
+                Debug.Log("°ÔÀÓ¿À¹ö");
+                Destroy(gameObject);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.tag == "Enemy")
+        if (collider.gameObject.tag == "Enemy")
         {
             Debug.Log("ºÎµúÈû");
             hp--;
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 Debug.Log("°ÔÀÓ¿À¹ö");
                 Destroy(gameObject);
@@ -111,9 +126,9 @@ public class PlayerMovement : MonoBehaviour
             //int dmg = boss.GetComponent<EnemyBossCtrl>().damage;
             //hp -= dmg;
             hp--;
-            Debug.Log("ºÎµúÈû");           
+            Debug.Log("ºÎµúÈû");
             if (hp <= 0)
-            {                
+            {
                 Debug.Log("°ÔÀÓ¿À¹ö");
                 Destroy(gameObject);
             }
@@ -139,8 +154,7 @@ public class PlayerMovement : MonoBehaviour
                     anim.SetBool("isRun", true);
                     character.localRotation = Quaternion.Euler(0, -90, 0);
                 }
-            }
-            
+            }           
         }        
     }
 
@@ -150,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isDead = true;
         }
-
         if (isDead == true)
             return;
     }

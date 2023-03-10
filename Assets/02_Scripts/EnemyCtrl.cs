@@ -29,7 +29,7 @@ public class EnemyCtrl : MonoBehaviour
     public PlayerMovement movement;
 
     public int hp = 50;
-    public int damage = 10;
+    public int damage = 5;
 
     void Start()
     {
@@ -154,6 +154,11 @@ public class EnemyCtrl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Player")
+        {
+            damage = 5;
+        }
+
         if (collision.gameObject.tag == "Bullet")
         {
             int dmg = collision.gameObject.GetComponent<BulletCtrl>().damage;

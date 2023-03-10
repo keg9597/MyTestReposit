@@ -5,8 +5,7 @@ using UnityEngine;
 public class BulletCtrl : MonoBehaviour
 {
     public int damage;
-    public float force = 100f;
-    
+    public float force = 100f;    
     private Rigidbody rb;
 
     void Start()
@@ -26,6 +25,10 @@ public class BulletCtrl : MonoBehaviour
         if (collision.gameObject.tag == "Boss")
         {
             damage = 10;
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Obj")
+        {
             Destroy(gameObject);
         }
     }

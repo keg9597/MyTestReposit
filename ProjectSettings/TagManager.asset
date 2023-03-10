@@ -11,6 +11,7 @@ TagManager:
   - PlayerEyes
   - SpawnPos
   - Boss
+  - Obj
   layers:
   - Default
   - TransparentFX
