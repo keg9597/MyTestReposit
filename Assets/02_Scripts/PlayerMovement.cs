@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpforce = 8;
     private float gravity = 25;
     private float verticalVelocity;
+    private float rotateSpeed = 10;
 
     public int hp = 100;
     public int maxhp = 100;
@@ -35,29 +36,41 @@ public class PlayerMovement : MonoBehaviour
         {
             verticalVelocity = -1;
             moveVector = Vector3.zero;
-            moveVector.x = Input.GetAxisRaw("Horizontal");           
-
-            if(moveVector.x > 0)
+            moveVector.x = Input.GetAxisRaw("Horizontal");
+            if (moveVector.x > 0)
             {
-                anim.SetBool("isRun", true);
-                character.localRotation = Quaternion.Euler(0, 90, 0);                
+                anim.SetBool("isRun_1", true);
+                character.localRotation = Quaternion.Euler(0, 90, 0);
             }
-            else if(moveVector.x < 0)
+            else if (moveVector.x < 0)
             {
-                anim.SetBool("isRun", true);
+                anim.SetBool("isRun_1", true);
                 character.localRotation = Quaternion.Euler(0, -90, 0);
             }
             else
             {
-                anim.SetBool("isRun", false);               
+                anim.SetBool("isRun_1", false);
             }
-            moveVector.z = Input.GetAxisRaw("Vertical");
+            
+            moveVector.z = Input.GetAxisRaw("Vertical"); 
+            if (moveVector.z > 0)
+            {
+                anim.SetBool("isRun", true);
+            }
+            else if (moveVector.z < 0)
+            {
+                anim.SetBool("isRun", true);
+            }
+            else
+            {
+                anim.SetBool("isRun", false);
+            }
 
             if (Input.GetButtonDown("Jump"))
             {
                 anim.SetBool("isJump", true);
                 anim.SetTrigger("doJump");
-                verticalVelocity = jumpforce;                
+                verticalVelocity = jumpforce;
             }
             else
             {
@@ -67,11 +80,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetTrigger("isDash");
             }
+
+            // new code to rotate player when moving vertically
+            if (moveVector.z > 0)
+            {
+                character.localRotation = Quaternion.Lerp(character.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * rotateSpeed);
+            }
+            else if (moveVector.z < 0)
+            {
+                character.localRotation = Quaternion.Lerp(character.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * rotateSpeed);
+            }
         }
         else
         {
             verticalVelocity -= gravity * Time.deltaTime;
-            moveVector = lastMove;           
+            moveVector = lastMove;
         }
 
         moveVector.y = 0;
